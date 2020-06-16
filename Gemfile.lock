@@ -109,7 +109,6 @@ GEM
     parallel (1.17.0)
     parser (2.6.3.0)
       ast (~> 2.4.0)
-    pg (1.1.4)
     pronto (0.10.0)
       gitlab (~> 4.0, >= 4.0.0)
       httparty (>= 0.13.7)
@@ -229,7 +228,6 @@ DEPENDENCIES
   capybara
   jquery-rails
   listen (~> 3.0.5)
-  pg
   pronto-rubocop
   puma (~> 3.0)
   rails (~> 5.2.0)
