@@ -1,6 +1,6 @@
 class ImagesController < ActionController::Base
   def show
-    @image = Image.find(params[:id])
+    @image = Image.find_by(id: params[:id])
   end
 
   def new
@@ -11,7 +11,7 @@ class ImagesController < ActionController::Base
     @image = Image.new(url: image_params[:url])
     if @image.valid?
       @image.save!
-      flash[:notice] = "Image url saved successfully"
+      flash[:notice] = 'Image url saved successfully'
       redirect_to @image
     else
       flash[:error] = 'Invalid Url!'
