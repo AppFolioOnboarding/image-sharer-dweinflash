@@ -1,4 +1,8 @@
 class ImagesController < ActionController::Base
+  def index
+    @images = Image.all.order(created_at: :desc)
+  end
+
   def show
     @image = Image.find_by(id: params[:id])
   end

@@ -1,0 +1,14 @@
+<div align = "center">
+  <h1>Welcome to David's Image Sharer!</h1>
+  <%= link_to 'Upload New Image', new_image_path %>
+  <h2>Newest Images</h2>
+  <table id="images-list">
+    <% @images.each do |image| %>
+      <tr class = "js-image-card">
+        <td>
+          <%= image_tag image.url, size: "300x300" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
