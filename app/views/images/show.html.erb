@@ -1,0 +1,13 @@
+<div class="row">
+  <aside class="col-md-4">
+    <section class="image_info">
+      <h1>
+        <% if @image %>
+          <%= image_tag @image.url %>
+        <% else %>
+          No image found!
+        <% end %>
+      </h1>
+    </section>
+  </aside>
+</div>
