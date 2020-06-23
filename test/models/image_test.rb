@@ -15,4 +15,10 @@ class ImageTest < ActiveSupport::TestCase
     @image = Image.new(url: '')
     assert_predicate @image, :invalid?
   end
+
+  def test_seeds
+    Image.delete_all
+    Rails.application.load_seed
+    assert_equal Image.count, 10
+  end
 end
