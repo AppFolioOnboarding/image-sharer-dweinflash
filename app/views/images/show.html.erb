@@ -8,6 +8,12 @@
           No image found!
         <% end %>
       </h1>
+      <% if @image %>
+        <p>
+          Tag: <br>
+          <span class="js_image_tag"><%= @image&.tag_list.join(', ') %></span>
+        </p>
+      <% end %>
     </section>
   </aside>
 </div>

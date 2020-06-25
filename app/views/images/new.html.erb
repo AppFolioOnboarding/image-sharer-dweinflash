@@ -9,7 +9,10 @@
       <%= f.label :url %>
       <%= f.text_field :url, class: 'form-control' %>
 
-      <%= f.submit "Submit Image Link", class: "btn btn-primary", id: "Button123" %>
+      <%= f.label :tag, 'Image Tags', id: "image_tag_label" %>
+      <%= f.text_field :tag_list %>
+
+      <%= f.submit "Submit Image Link", class: "btn btn-primary", id: "button_123" %>
     <% end %>
   </div>
 </div>
