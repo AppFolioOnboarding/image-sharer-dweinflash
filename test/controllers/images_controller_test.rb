@@ -23,6 +23,50 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'td', 'tag1'
   end
 
+  def test_show_success
+    valid_image_url = 'https://www.gstatic.com/webp/gallery3/1.png'
+    valid_tag = 'test'
+    image = Image.create!(url: valid_image_url, tag_list: valid_tag)
+    get image_path(image)
+    assert_response :ok
+    assert_includes response.body, valid_image_url
+    assert_equal Image.last.url, valid_image_url
+    assert_equal Image.last.tag_list, [valid_tag]
+    assert_select '.js_image_tag', valid_tag
+  end
+
+  def test_show_empty_tag
+    valid_image_url = 'https://www.gstatic.com/webp/gallery3/1.png'
+    valid_tag = ''
+    image = Image.create!(url: valid_image_url, tag_list: valid_tag)
+    get image_path(image)
+    assert_response :ok
+    assert_includes response.body, valid_image_url
+    assert_equal Image.last.url, valid_image_url
+    assert_equal Image.last.tag_list, []
+    assert_select '.js_image_tag', valid_tag
+  end
+
+  def test_show_no_tag
+    valid_image_url = 'https://www.gstatic.com/webp/gallery3/1.png'
+    image = Image.create!(url: valid_image_url, tag_list: nil)
+    get image_path(image)
+    assert_response :ok
+    assert_includes response.body, valid_image_url
+    assert_equal Image.last.url, valid_image_url
+    assert_equal Image.last.tag_list, []
+    assert_select '.js_image_tag', nil
+  end
+
+  def test_show_many_tags
+    valid_image_url = 'https://www.gstatic.com/webp/gallery3/1.png'
+    valid_tags = %w[test1 test2]
+    image = Image.create!(url: valid_image_url, tag_list: valid_tags)
+    get image_path(image)
+    assert_response :ok
+    assert_select '.js_image_tag', valid_tags.join(', ')
+  end
+
   def test_show_image_not_found
     get '/images/asdf'
     assert_includes response.body, 'No image found!'
