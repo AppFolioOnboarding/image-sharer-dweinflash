@@ -12,7 +12,7 @@ class ImagesController < ActionController::Base
   end
 
   def create
-    @image = Image.new(url: image_params[:url])
+    @image = Image.new(image_params)
     if @image.valid?
       @image.save!
       flash[:notice] = 'Image url saved successfully'
@@ -26,6 +26,6 @@ class ImagesController < ActionController::Base
   private
 
   def image_params
-    params.require(:image).permit(:url)
+    params.require(:image).permit(:url, :tag_list)
   end
 end

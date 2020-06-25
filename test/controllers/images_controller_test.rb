@@ -1,5 +1,28 @@
 require 'test_helper'
 class ImagesControllerTest < ActionDispatch::IntegrationTest
+  def test_index
+    images = [
+      { url: 'https://www.gstatic.com/webp/gallery3/1.png',
+        tag_list: 'tag1' },
+      { url: 'https://www.gstatic.com/webp/gallery3/2.png',
+        tag_list: 'tag2' }
+    ]
+    Image.create!(images)
+    get images_path
+    assert_response :ok
+    assert_select 'img', 2 do |image|
+      assert image[0].attributes['width'].value.to_i <= 400
+      assert image[1].attributes['width'].value.to_i <= 400
+      assert_equal 'https://www.gstatic.com/webp/gallery3/2.png',
+                   image[0].attributes['src'].value
+      assert_equal 'https://www.gstatic.com/webp/gallery3/1.png',
+                   image[1].attributes['src'].value
+    end
+    assert_select 'tr', 2
+    assert_select 'td', 'tag2'
+    assert_select 'td', 'tag1'
+  end
+
   def test_show_image_not_found
     get '/images/asdf'
     assert_includes response.body, 'No image found!'

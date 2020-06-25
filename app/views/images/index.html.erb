@@ -7,6 +7,7 @@
       <tr class = "js-image-card">
         <td>
           <%= image_tag image.url, size: "300x300" %>
+          <%= image.tag_list&.join(', ') %>
         </td>
       </tr>
     <% end %>
