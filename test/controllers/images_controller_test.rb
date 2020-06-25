@@ -1,14 +1,5 @@
 require 'test_helper'
 class ImagesControllerTest < ActionDispatch::IntegrationTest
-  def test_show_success
-    valid_image_url = 'https://www.gstatic.com/webp/gallery3/1.png'
-    image = Image.create!(url: valid_image_url)
-    get image_path(image)
-    assert_response :ok
-    assert_includes response.body, valid_image_url
-    assert_equal Image.last.url, valid_image_url
-  end
-
   def test_show_image_not_found
     get '/images/asdf'
     assert_includes response.body, 'No image found!'
@@ -37,6 +28,8 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :ok
     assert_includes response.body, 'Image Link Form'
     assert_select '.btn-primary'
-    assert_select '#Button123'
+    assert_select '#button_123'
+    assert_select '#image_tag_list'
+    assert_select '#image_tag_label'
   end
 end
