@@ -1,6 +1,11 @@
 class ImagesController < ActionController::Base
   def index
-    @images = Image.all.order(created_at: :desc)
+    image_tags = params.permit(:tag)[:tag]
+    if image_tags.nil?
+      @images = Image.all.order(created_at: :desc)
+    else
+      @images = Image.tagged_with(image_tags).order(created_at: :desc)
+    end
   end
 
   def show
