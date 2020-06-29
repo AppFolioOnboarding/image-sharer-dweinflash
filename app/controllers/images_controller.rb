@@ -28,6 +28,16 @@ class ImagesController < ActionController::Base
     end
   end
 
+  def destroy
+    @image = Image.find_by(id: params[:id])
+    if @image
+      @image.destroy
+    else
+      flash[:error] = 'Cannot delete image - it does not exist!'
+    end
+    redirect_to images_path
+  end
+
   private
 
   def image_params
