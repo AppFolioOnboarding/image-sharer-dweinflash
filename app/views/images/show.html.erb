@@ -11,7 +11,9 @@
       <% if @image %>
         <p>
           Tag: <br>
-          <span class="js_image_tag"><%= @image&.tag_list.join(', ') %></span>
+          <span class="js-image-tag">
+            <%= raw(@image.tag_list.map { |t| link_to t, images_path(tag: t) }.join(', ')) %>
+          </span>
         </p>
       <% end %>
     </section>
