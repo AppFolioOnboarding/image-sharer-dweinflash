@@ -90,6 +90,11 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'tr', 2
     assert_select 'td', 'tag2'
     assert_select 'td', 'tag1'
+    assert_select '.js-delete-link', count: 2
+    assert_select 'td:last-child' do
+      assert_select 'a[data-confirm]'
+      assert_select 'a', 'Destroy'
+    end
   end
 
   def test_show_success

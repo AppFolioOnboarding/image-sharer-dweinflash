@@ -11,6 +11,12 @@
             <li><%= link_to t, images_path(tag: t) %></li>
           <% end %>
         </td>
+        <span class="js-delete-link">
+          <td>
+            <%= link_to 'Destroy', image, method: :delete,
+                        data: { confirm: 'Confirm deletion?' } %>
+          </td>
+        </span>
       </tr>
     <% end %>
   </table>
