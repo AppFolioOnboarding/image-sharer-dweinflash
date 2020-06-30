@@ -106,6 +106,11 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_equal Image.last.url, VALID_IMAGE_URL
     assert_equal Image.last.tag_list, [valid_tag]
     assert_select '.js-image-tag', valid_tag
+    assert_select '.js-delete-link', count: 1
+    assert_select '.js-delete-link' do
+      assert_select 'a[data-confirm]'
+      assert_select 'a', 'Destroy'
+    end
   end
 
   def test_show_empty_tag
