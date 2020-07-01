@@ -33,7 +33,7 @@ class ImageTest < ActiveSupport::TestCase
     valid_image_url = 'https://www.gstatic.com/webp/gallery3/1.png'
     tags = 'tag1,tag2'
     image = Image.create!(url: valid_image_url, tag_list: tags)
-    assert_equal image.tag_list, %w(tag1 tag2)
+    assert_equal image.tag_list, %w[tag1 tag2]
   end
 
   def test_empty_tag

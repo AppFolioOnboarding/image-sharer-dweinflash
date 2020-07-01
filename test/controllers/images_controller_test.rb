@@ -3,6 +3,27 @@ require 'test_helper'
 VALID_IMAGE_URL = 'https://www.gstatic.com/webp/gallery3/1.png'.freeze
 
 class ImagesControllerTest < ActionDispatch::IntegrationTest
+  def test_delete_from_home
+    image_delete = Image.create!(url: VALID_IMAGE_URL, tag_list: 'delete')
+    Image.create!(url: VALID_IMAGE_URL, tag_list: 'keep')
+    delete image_path(image_delete.id)
+    assert_redirected_to images_path
+    get images_path
+    assert_select '.js-image-card', count: 1
+    assert_select 'td', 'keep'
+  end
+
+  def test_delete_fail_image_dne
+    new_id = 1
+    get image_path(new_id)
+    assert_includes response.body, 'No image found!'
+    assert_no_difference 'Image.count' do
+      delete image_path(new_id)
+    end
+    assert_equal 'Cannot delete image - it does not exist!', flash[:error]
+    assert_redirected_to images_path
+  end
+
   def test_filter_many_tags
     tag_1 = 'tag1'
     tag_many = %w[tag1 tag2]
@@ -69,6 +90,11 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'tr', 2
     assert_select 'td', 'tag2'
     assert_select 'td', 'tag1'
+    assert_select '.js-delete-link', count: 2
+    assert_select 'td:last-child' do
+      assert_select 'a[data-confirm]'
+      assert_select 'a', 'Destroy'
+    end
   end
 
   def test_show_success
@@ -80,6 +106,11 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_equal Image.last.url, VALID_IMAGE_URL
     assert_equal Image.last.tag_list, [valid_tag]
     assert_select '.js-image-tag', valid_tag
+    assert_select '.js-delete-link', count: 1
+    assert_select '.js-delete-link' do
+      assert_select 'a[data-confirm]'
+      assert_select 'a', 'Destroy'
+    end
   end
 
   def test_show_empty_tag

@@ -3,7 +3,7 @@
     <section class="image_info">
       <h1>
         <% if @image %>
-          <%= image_tag @image.url %>
+          <%= image_tag @image.url, size: "300x300" %>
         <% else %>
           No image found!
         <% end %>
@@ -12,9 +12,13 @@
         <p>
           Tag: <br>
           <span class="js-image-tag">
-            <%= raw(@image.tag_list.map { |t| link_to t, images_path(tag: t) }.join(', ')) %>
+            <%= (@image.tag_list.map { |t| link_to t, images_path(tag: t) }.join(', ')).html_safe %>
           </span>
         </p>
+        <span class="js-delete-link">
+        <%= link_to 'Destroy', @image, method: :delete,
+                    data: { confirm: 'Confirm deletion?' } %>
+        </span>
       <% end %>
     </section>
   </aside>
