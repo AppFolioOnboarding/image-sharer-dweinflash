@@ -11,11 +11,11 @@ class App extends Component {
   };
 
   render() {
-    const feedbackStore = this.props.stores.feedbackStore;
+    const FeedbackStore = this.props.stores.FeedbackStore;
     return (
       <div>
         <Header title={'Tell us what you think'} />
-        <FeedbackForm store={feedbackStore} />
+        <FeedbackForm store={FeedbackStore} />
         <Footer />
       </div>
     )

@@ -9,8 +9,8 @@ import Footer from '../../components/Footer';
 
 describe('App Test', () => {
   it('app should render components', () => {
-    const feedbackStore = { feedbackStore: {} };
-    const wrapper = mount(<App stores={feedbackStore} />);
+    const FeedbackStore = { FeedbackStore: {} };
+    const wrapper = mount(<App stores={FeedbackStore} />);
 
     const header = wrapper.find(Header);
     const footer = wrapper.find(Footer);
