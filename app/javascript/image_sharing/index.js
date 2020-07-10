@@ -5,12 +5,12 @@ import { Provider } from 'mobx-react';
 import FeedbackStore from './stores/FeedbackStore';
 
 const stores = {
-  feedbackStore: new FeedbackStore()
+  FeedbackStore: new FeedbackStore()
 };
 
 ReactDOM.render(
   <Provider stores={stores}>
-    <App/>
+    <App />
   </Provider>,
   document.getElementById('feedback-root')
 );
